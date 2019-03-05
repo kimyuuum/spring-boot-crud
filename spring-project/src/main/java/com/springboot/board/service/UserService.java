@@ -4,7 +4,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.springboot.board.domain.Board;
-import com.springboot.board.repository.BoardRepository;
+
 
 import com.springboot.board.domain.User;
 import com.springboot.board.repository.UserRepository;

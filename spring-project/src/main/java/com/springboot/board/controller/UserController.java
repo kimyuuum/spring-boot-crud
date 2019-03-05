@@ -2,11 +2,10 @@ package com.springboot.board.controller;
 
 
 import com.springboot.board.domain.Board;
+import com.springboot.board.domain.User;
 import com.springboot.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +24,14 @@ public class UserController {
         return userService.findAll();
     }
 
-    
+    @RequestMapping(value = "/uinsert", method = RequestMethod.POST)
+    public void insert(@RequestBody User user){
+        userService.saveUser(user);
+    }
+
+    @RequestMapping(value = "/udelete", method = RequestMethod.DELETE)
+    public void delete(@RequestParam(name = "idx") Long idx){
+        userService.deleteById(idx);
+    }
 
 }
