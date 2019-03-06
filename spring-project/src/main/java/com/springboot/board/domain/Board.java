@@ -8,15 +8,21 @@ import org.hibernate.annotations.Fetch;
 
 import java.util.Date;
 import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
 public class Board {
-    @Temporal(TemporalType.DATE)
-    Date uploadDate;
 
     @Id
     @GeneratedValue
     private Long index;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Temporal(TemporalType.DATE)
+    Date uploadDate;
+
+    @ManyToOne
+//  @JoinColumn(name = "userid")
     private User user;
 
    private String title;

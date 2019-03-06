@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/showAll",method = RequestMethod.GET)
-    public List<Board> showAll(){
+    public List<User> showAll(){
         return userService.findAll();
     }
 

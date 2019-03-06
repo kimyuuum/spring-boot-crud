@@ -20,7 +20,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<Board> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 

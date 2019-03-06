@@ -18,7 +18,8 @@ public class User {
     private Long idx;
 
 //불필요한 조회를 막으려면 LAZY 사용 항상 가져오면 EAGER
-    @OneToMany(mappedBy = "User",cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Board> boards;
 
     private String username;

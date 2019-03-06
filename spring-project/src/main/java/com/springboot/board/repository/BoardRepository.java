@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface BoardRepository extends JPARepository<Board,Long>{
+public interface BoardRepository extends JpaRepository<Board , Long>{
 
 
     List<Board> findAll();
 
-    void save(Board board);
+    <B extends Board> B save(B borad);
 
     void deleteById(Long index);
 }
