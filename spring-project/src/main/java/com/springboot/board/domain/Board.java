@@ -12,22 +12,24 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "BOARD")
 public class Board {
-
     @Id
     @GeneratedValue
-    private Long index;
+    private Long idx;
 
+    @Column(name = "title")
+    private String title;
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "uploadDate")
     @Temporal(TemporalType.DATE)
     Date uploadDate;
 
     @ManyToOne
-//  @JoinColumn(name = "userid")
+    @JoinColumn(name = "user_idx")
     private User user;
-
-   private String title;
-   private String contents;
-
 
 
 }

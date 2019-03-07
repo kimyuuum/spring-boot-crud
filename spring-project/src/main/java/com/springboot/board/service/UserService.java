@@ -1,6 +1,7 @@
 package com.springboot.board.service;
 
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 
 import com.springboot.board.domain.Board;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository){
@@ -23,14 +24,18 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+    public User findById(Long idx){
+        return userRepository.findById(idx).get();
+    }
 
     public void saveUser(User user){
         userRepository.save(user);
     }
 
-    public void deleteById(Long idx){
+    public void deleteById(Long idx) {
         userRepository.deleteById(idx);
     }
+
 
 
 }

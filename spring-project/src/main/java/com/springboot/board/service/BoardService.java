@@ -21,12 +21,11 @@ public class BoardService {
         this.boardRepository = boardRepository;
 
     }
-
     public List<Board> findAll(){return boardRepository.findAll();}
 
     public void saveBoard(Board board){boardRepository.save(board);}
-    public void deleteById(Long index){
-        boardRepository.deleteById(index);
+    public void deleteById(Long idx){
+        boardRepository.deleteById(idx);
     }
 
 
