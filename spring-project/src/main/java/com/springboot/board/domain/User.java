@@ -1,5 +1,6 @@
 package com.springboot.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,48 +13,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Getter @Setter
+@Getter
+@Setter
 @Table(name = "USER")
-public class User{
+public class User {
     @Id
     @GeneratedValue
     private Long idx;
 
-//불필요한 조회를 막으려면 LAZY 사용 항상 가져오면 EAGER
-   @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<Board> boards;
+    //불필요한 조회를 막으려면 LAZY 사용 항상 가져오면 EAGER
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @JsonBackReference
+    private List<Board> boards = new ArrayList<>();
 
     private String username;
     private String userid;
     @Column(name = "phone_num")
     private String phoneNum;
 
-    public Long getUseridx(){return idx;}
-    public String getUserid(){
-        return userid;
+    public void addBoard(Board board) {
+        this.boards.add(board);
     }
-    public void setUserid(String userid){
-        this.userid = userid;
+
+    public void removeBoard(Board board) {
+        this.boards.remove(board);
     }
-    public String getUsername(){
+
+    public Long getUseridx() {
+        return idx;
+    }
+
+    public String getUsername() {
         return username;
     }
-    public void setUsername(String username){
+
+    public void setUsername() {
         this.username = username;
     }
-    public String getPhoneNum(){
-        return phoneNum;
-    }
-    public void setPhoneNum(String phoneNum){
-        this.phoneNum = phoneNum;
-    }
-
-
-    public boolean addBoard(Board board){
-        if(boards ==null)
-            boards = new ArrayList<>();
-
-        return this.boards.add(board);
-    }
-
 }
