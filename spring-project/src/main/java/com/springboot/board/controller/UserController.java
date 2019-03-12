@@ -6,16 +6,19 @@ import com.springboot.board.domain.User;
 import com.springboot.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import sun.misc.Request;
 
 import javax.persistence.JoinColumn;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/board")
-@RestController
+@Controller
 public class UserController {
     private final UserService userService;
 
@@ -24,29 +27,33 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/ushowAll", method = RequestMethod.GET)
-    public List<User> showAll(){
-        return userService.findAll();
+    @RequestMapping("/ushowAll")
+    public String list(Model model){
+        List<User> list = userService.findAll();
+        model.addAttribute("list",list);
+        return "user/userList";
+    }
+//
+//    @RequestMapping(value ="/ushowOne", method = RequestMethod.GET)
+//    public User showOne(@RequestParam (name = "idx") Long idx){
+//        return userService.findById(idx);
+//    }
+
+    @RequestMapping(value = "/uinsert" , method = RequestMethod.GET)
+    public String add(Model model){
+        return "user/userReg";
     }
 
-    @RequestMapping(value ="/ushowOne", method = RequestMethod.GET)
-    public User showOne(@RequestParam (name = "idx") Long idx){
-        return userService.findById(idx);
-    }
-
-    @RequestMapping(value = "/uinsert", method = RequestMethod.POST)
-    // @RequestBody 어노테이션은 @RequestMapping에 의해 POST 방식으로 전송된 HTTP 요청 데이터를
-    // String 타입의 body 파라미터로 전달된다.(수신)
-    // 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면
-    // 해당 메서드의 리턴 값을 HTTP 응답 데이터로 사용한다.
-    // insert 메서드의 리턴 값의 타입 데이터를 HTTP 응답 데이터로 전송한다.(송신)
-    public void insert(@RequestBody User user){
+    @RequestMapping(value = "/uinsert",method = RequestMethod.POST)
+    public String postAdd(User user){
         userService.saveUser(user);
+        return "redirect:/board/ushowAll";
     }
 
-    @RequestMapping(value = "/udelete", method = RequestMethod.DELETE)
-    public void delete(@RequestParam(name = "idx") Long idx){
+    @RequestMapping(value = "/udelete/{idx}", method = RequestMethod.GET)
+    public String del(@PathVariable Long idx){
         userService.deleteById(idx);
+        return "redirect:/board/ushowAll";
     }
 
     @RequestMapping(value = "/uupdate" , method = RequestMethod.POST)

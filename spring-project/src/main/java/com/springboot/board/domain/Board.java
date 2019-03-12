@@ -1,7 +1,9 @@
 package com.springboot.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import com.springboot.board.domain.User;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
@@ -30,7 +32,9 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "user_idx" , nullable=false) //실제 FK 컬럼명
+    @JsonManagedReference
     private User user; // 이 보드가 어떤 사용자에 의해 작성되었는가
+
 
     public void setUser(User user){
         if(this.user != null){
@@ -44,5 +48,8 @@ public class Board {
         return idx;
     }
 
+    public void setUploadDate(Date uploadDate){
+        this.uploadDate = uploadDate;
+    }
 
 }

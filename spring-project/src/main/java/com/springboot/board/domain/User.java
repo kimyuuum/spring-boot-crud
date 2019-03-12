@@ -1,5 +1,6 @@
 package com.springboot.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,15 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "USER")
-public class User{
+public class User {
     @Id
     @GeneratedValue
     private Long idx;
 
-//불필요한 조회를 막으려면 LAZY 사용 항상 가져오면 EAGER
-   @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    //불필요한 조회를 막으려면 LAZY 사용 항상 가져오면 EAGER
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Board> boards = new ArrayList<>();
 
     private String username;
@@ -28,15 +31,23 @@ public class User{
     @Column(name = "phone_num")
     private String phoneNum;
 
-    public void addBoard(Board board){
+    public void addBoard(Board board) {
         this.boards.add(board);
     }
 
-    public void removeBoard(Board board){
+    public void removeBoard(Board board) {
         this.boards.remove(board);
     }
 
     public Long getUseridx() {
         return idx;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername() {
+        this.username = username;
     }
 }
