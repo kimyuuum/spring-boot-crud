@@ -4,10 +4,7 @@ spring boot를 이용한 CRUD Board Project
 
 Architecture  
 
-> VIEW - CONTROLLER - SERVICE - REPOSITORY - DOIAMIN - DATABASE
-
-
-
+> VIEW - CONTROLLER - SERVICE - REPOSITORY - DOIAMIN - DATABASE  
 
 
 
@@ -89,7 +86,7 @@ JpaRepository 인터페이스를 이용해서 메소드를 호출하는 것 만�
 
 
 
-**@BoardRepository.java **
+**@BoardRepository.java**
 
 ```java
 public interface BoardRepository extends JpaRepository<Board , Long>{
@@ -237,7 +234,7 @@ model.addAttributd(String name, Object value);
 
 
 
-VIEW파일을 통해 시각적으로 데이터들을 표현 한 뒤 Project 마무리한다. 
+VIEW파일을 통해 시각적으로 데이터들을 표현 한 뒤 Project 마무리. 
 
 
 
