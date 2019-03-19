@@ -10,12 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.RequestingUserName;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/board")
-@Controller
+@RestController
 public class BoardController {
     private final BoardService boardService;
     private final UserService userService;
@@ -27,58 +28,24 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/bshowAll", method = RequestMethod.GET)
-    public String list(Model model) {
-        List<Board> boardList = boardService.findAll();
-        model.addAttribute("boardList", boardList);
-        return "board/boardList";
+    public List<Board> bshowAll(){
+        return boardService.findAll();
     }
 
-    @RequestMapping(value = "/bshowOne/{idx}", method = RequestMethod.GET)
-    public String showOne(@PathVariable Long idx, Model model) {
-        Board boardList = boardService.findById(idx);
-        model.addAttribute("boardList", boardList);
-        return "board/boardDetail";
-    }
-
-
-    @RequestMapping(value = "/binsert", method = RequestMethod.GET)
-    public String add(Model model) {
-        return "board/boardReg";
+    @RequestMapping(value = "/bshowOne", method = RequestMethod.GET)
+    public Board showOne(@RequestParam(name = "idx") Long idx){
+        return boardService.findById(idx);
     }
 
     @RequestMapping(value = "/binsert", method = RequestMethod.POST)
-    public String addPost(@RequestParam("userid") String userid, Board board) {
-        Date date = new Date();
-        board.setUploadDate(date);
-        board.setUser(userService.findByuserid(userid));
-
-        boardService.saveBoard(board);
-        return "redirect:/board/bshowAll";
-    }
-
-    @RequestMapping(value = "/bupdate/{idx}", method = RequestMethod.GET)
-    public String update(@PathVariable Long idx, Model model) {
-        Board board = boardService.findById(idx);
-        model.addAttribute("data", board);
-        return "board/boardMod";
-    }
+    public void insert(@RequestBody Board board){boardService.saveBoard(board);}
 
     @RequestMapping(value = "/bupdate", method = RequestMethod.POST)
-    public String postUpdate(@RequestParam("userid") String userid, Board board) {
-        Date newdate = new Date();
-        board.setUploadDate(newdate);
-        board.setUser(userService.findByuserid(userid));
+    public void update(@RequestBody Board request){boardService.saveBoard(request);}
 
-        boardService.saveBoard(board);
-
-        return "redirect:/board/bshowAll";
-    }
-
-
-    @RequestMapping(value = "/bdelete/{idx}", method = RequestMethod.GET)
-    public String dele(@PathVariable Long idx) {
+    @RequestMapping(value = "/bdelete", method = RequestMethod.DELETE)
+    public void delete(@RequestParam(name = "idx") Long idx){
         boardService.deleteById(idx);
-        return "redirect:/board/bshowAll";
     }
 
 }

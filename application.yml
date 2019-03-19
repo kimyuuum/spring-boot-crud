@@ -1,0 +1,65 @@
+server:
+  port: 8000
+spring:
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://db-hanwha-dev.brushmon.com:3306/brushmon?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://brushmon-hanwha-dev-2-cluster.cluster-czsrsxsbdtyn.ap-northeast-2.rds.amazonaws.com:3306/brushmon?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: brush_dev
+    password: Brushmysql3306$
+  freemarker:
+      cache: false
+  jpa:
+    database-platform: org.hibernate.dialect.MYSQL5Dialect
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        generate_statistics: false
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    host: localhost
+    password:
+    port: 6379
+  http:
+    multipart:
+        max-file-size: 512MB
+        max-request-size: 512MB
+  output:
+    ansi:
+      enabled: always
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  configuration:
+    lazyLoadingEnabled: true
+    aggressiveLazyLoading: false
+    mapUnderscoreToCamelCase: true
+  type-aliases-package: net.kittenpla.domain
+logging.level:
+  org.springframework:
+    security: info
+    boot: info
+    web: info
+  org.apache.ibatis : info
+  net.kittenpla.controller : info
+service:
+  brush:
+    areaCount: 16
+mail:
+  host: smtp.gmail.com
+  port: 587
+  protocol: smtp
+  default-encoding: UTF-8
+  smtp:
+    start-tls-enable: true
+    auth: true
+props:
+  custom:
+    nginx:
+      path: /BrushMonster/html/static
+firebase:
+  fcmKey:
+  fcmURL: http://fcm.googleapis.com/fcm/send
+

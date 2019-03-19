@@ -15,6 +15,5 @@ public interface BoardRepository extends JpaRepository<Board , Long>{
     Optional <Board> findById(Long idx);
     <B extends Board> B save(B board);
     void deleteById(Long index);
-
 }
 

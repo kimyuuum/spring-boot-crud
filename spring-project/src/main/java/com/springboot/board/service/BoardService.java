@@ -21,9 +21,9 @@ public class BoardService {
     public BoardService(BoardRepository boardRepository){
         this.boardRepository = boardRepository;
     }
-
     public List<Board> findAll(){return boardRepository.findAll();}
     public Board findById(Long idx){ return boardRepository.findById(idx).get(); }
     public void saveBoard(Board board){boardRepository.save(board);}
     public void deleteById(Long idx){ boardRepository.deleteById(idx); }
+
 }
